@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Pokémon Generator</title>
+<style>
+body{
+  background:#0e1020;
+  color:white;
+  font-family:sans-serif;
+  text-align:center;
+}
+button{
+  padding:12px;
+  margin:6px;
+  font-size:16px;
+  border-radius:10px;
+  border:none;
+  background:#7b7bff;
+  color:white;
+}
+.box{
+  background:#1c1f3a;
+  padding:15px;
+  border-radius:15px;
+  margin:10px;
+}
+img{
+  margin-top:10px;
+  border-radius:12px;
+  max-width:200px;
+}
+</style>
+</head>
+<body>
+
+<h2>🎨 Generador Pokémon</h2>
+
+<div class="box">
+<button onclick="base()">Base</button>
+<p id="base">Base: —</p>
+
+<button onclick="tipo()">Tipo</button>
+<p id="tipo">Tipo: —</p>
+
+<button onclick="doble()">Doble tipo</button>
+<p id="doble">Segundo tipo: —</p>
+
+<button onclick="paleta()">Paleta</button>
+<p id="paleta">Paleta: —</p>
+
+<button onclick="forma()">Animal / Cosa</button>
+<p id="forma">Forma: —</p>
+
+<img id="img" src="">
+</div>
+
+<script>
+const tipos=["Normal","Fuego","Agua","Planta","Eléctrico","Hielo","Lucha","Veneno","Tierra","Volador","Psíquico","Bicho","Roca","Fantasma","Dragón","Acero","Siniestro","Hada"];
+
+const paletas={
+Fuego:["#FF4500","#FF8C00","#FFD700"],
+Agua:["#1E90FF","#00CED1","#AFEEEE"],
+Planta:["#2E8B57","#7CFC00","#556B2F"],
+Eléctrico:["#FFD700","#FFFACD","#FFA500"],
+Hielo:["#AFEEEE","#E0FFFF","#ADD8E6"],
+Fantasma:["#6A5ACD","#483D8B","#7B68EE"],
+Roca:["#8B7D6B","#A9A9A9","#C2B280"],
+Acero:["#B0C4DE","#778899","#D3D3D3"],
+Siniestro:["#2F4F4F","#1C1C1C","#696969"],
+Hada:["#FFB6C1","#FFC0CB","#E6E6FA"]
+};
+
+const animales=["lobo","zorro","gato","tigre","león","pantera","oso","mapache","nutria","halcón","búho","águila","serpiente","cobra","lagarto","camaleón","rana","sapo","tortuga","dragón","murciélago","cuervo","ciervo","alce","caballo","unicornio","cabra","oveja","cerdo","vaca","bisonte","rinoceronte","elefante","hipopótamo","jirafa","cebra","mono","gorila","chimpancé","perezoso","koala","canguro","delfín","tiburón","ballena","orca","pulpo","calamar","estrella de mar","medusa","cangrejo","langosta","hormiga","abeja","avispa","mariposa","polilla","escarabajo","araña","escorpión"];
+
+const cosas=["espada","cadena","máscara","cristal","reloj","linterna","libro","corona","armadura","escudo","llave","anillo","cáliz","orbe","piedra","tótem","martillo","lanza","arco","flecha","daga","guadaña","varita","báculo","cofre","tesoro","reliquia","amuleto"];
+
+let baseActual="";
+let tipoActual="";
+
+function rand(a){return a[Math.floor(Math.random()*a.length)]}
+
+function base(){
+  baseActual=Math.random()<0.5?"Animal":"Cosa";
+  document.getElementById("base").innerText="Base: "+baseActual;
+}
+
+function tipo(){
+  tipoActual=rand(tipos);
+  document.getElementById("tipo").innerText="Tipo: "+tipoActual;
+}
+
+function doble(){
+  if(!tipoActual)return alert("Primero elige tipo");
+  if(Math.random()<0.5){
+    document.getElementById("doble").innerText="Segundo tipo: N/A";
+  }else{
+    let t;
+    do{t=rand(tipos)}while(t===tipoActual);
+    document.getElementById("doble").innerText="Segundo tipo: "+t;
+  }
+}
+
+function paleta(){
+  const p=paletas[tipoActual];
+  document.getElementById("paleta").innerText=p?"Paleta: "+p.join(" , "):"Paleta: libre";
+}
+
+function forma(){
+  if(!baseActual)return alert("Primero Base");
+  const f=baseActual==="Animal"?rand(animales):rand(cosas);
+  document.getElementById("forma").innerText="Forma: "+f;
+  document.getElementById("img").src="https://source.unsplash.com/300x300/?"+f;
+}
+</script>
+
+</body>
+</html>
